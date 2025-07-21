@@ -6,7 +6,7 @@
   <title>Voice Translator + Video</title>
 </head>
 <body>
-  <h1>🌍 Live Voice Translator + Video Call</h1>
+  <h1>🌐 Voice Translator + Video Call</h1>
 
   <label>From Language:</label>
   <select id="fromLang">
@@ -15,6 +15,8 @@
     <option value="hi">Hindi</option>
   </select>
 
+  <br/><br/>
+
   <label>To Language:</label>
   <select id="toLang">
     <option value="te">Telugu</option>
@@ -22,27 +24,19 @@
     <option value="hi">Hindi</option>
   </select>
 
-  <br><br>
-  <button onclick="startRecognition()">🎤 Speak</button>
+  <br/><br/>
 
-  <p>Original: <span id="originalText"></span></p>
-  <p>Translated: <span id="translatedText"></span></p>
+  <button onclick="startRecognition()">🎤 Start Speaking</button>
+  <button onclick="speak()">🔊 Speak Translated Text</button>
 
-  <button onclick="speak()">🔊 Speak Output</button>
+  <p><strong>Original:</strong> <span id="originalText"></span></p>
+  <p><strong>Translated:</strong> <span id="translatedText"></span></p>
 
-  <h2>🔴 Video Call</h2>
   <iframe
     src="https://meet.jit.si/kireeti-room"
     width="100%" height="400px"
     allow="camera; microphone" allowfullscreen>
   </iframe>
-<br><br>
-<button onclick="startRecognition()">🎤 Start Speaking</button>
-<br><br>
-<p><strong>Original Text:</strong> <span id="originalText"></span></p>
-<p><strong>Translated Text:</strong> <span id="translatedText"></span></p>
-<br>
-<button onclick="speak()">🔊 Speak Translated Text</button>
 
   <script>
     let original = '';
@@ -51,18 +45,21 @@
     function startRecognition() {
       const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = document.getElementById('fromLang').value;
+
       recognition.onresult = function (event) {
         original = event.results[0][0].transcript;
         document.getElementById('originalText').textContent = original;
         translateText(original);
       };
+
       recognition.start();
     }
 
     function translateText(text) {
       const from = document.getElementById('fromLang').value;
       const to = document.getElementById('toLang').value;
-      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURI(text)}`;
+
       fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -72,11 +69,11 @@
     }
 
     function speak() {
-      const synth = window.speechSynthesis;
-      const utter = new SpeechSynthesisUtterance(translated);
-      utter.lang = document.getElementById('toLang').value;
-      synth.speak(utter);
+      const utterance = new SpeechSynthesisUtterance(translated);
+      utterance.lang = document.getElementById('toLang').value;
+      speechSynthesis.speak(utterance);
     }
   </script>
 </body>
 </html>
+
