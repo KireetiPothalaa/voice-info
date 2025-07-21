@@ -1,30 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Voice Translator + Video</title>
 </head>
 <body>
   <h1>🌍 Live Voice Translator + Video Call</h1>
 
+  <label>From Language:</label>
   <select id="fromLang">
     <option value="en">English</option>
     <option value="te">Telugu</option>
     <option value="hi">Hindi</option>
   </select>
 
+  <label>To Language:</label>
   <select id="toLang">
     <option value="te">Telugu</option>
     <option value="en">English</option>
     <option value="hi">Hindi</option>
   </select>
 
+  <br><br>
   <button onclick="startRecognition()">🎤 Speak</button>
+
   <p>Original: <span id="originalText"></span></p>
   <p>Translated: <span id="translatedText"></span></p>
+
   <button onclick="speak()">🔊 Speak Output</button>
 
   <h2>🔴 Video Call</h2>
-  <iframe src="https://meet.jit.si/kireeti-room" width="100%" height="400px" allow="camera; microphone" allowfullscreen></iframe>
+  <iframe
+    src="https://meet.jit.si/kireeti-room"
+    width="100%" height="400px"
+    allow="camera; microphone" allowfullscreen>
+  </iframe>
+<br><br>
+<button onclick="startRecognition()">🎤 Start Speaking</button>
+<br><br>
+<p><strong>Original Text:</strong> <span id="originalText"></span></p>
+<p><strong>Translated Text:</strong> <span id="translatedText"></span></p>
+<br>
+<button onclick="speak()">🔊 Speak Translated Text</button>
 
   <script>
     let original = '';
@@ -62,4 +80,3 @@
   </script>
 </body>
 </html>
-
